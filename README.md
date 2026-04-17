@@ -1,12 +1,22 @@
 # voacap-swift
 
-A modern Swift port of VOACAP, the Voice of America Coverage Analysis Program for HF radio propagation prediction. Originally developed by NTIA/ITS (National Telecommunications and Information Administration, Institute for Telecommunication Sciences) and adapted for POSIX systems by J.A. Watson (HZ1JW / M0DNS) as VOACAPL.
+![release](https://img.shields.io/badge/release-v0.1.0-blue)
+![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Raspberry%20Pi-green)
+![license](https://img.shields.io/badge/license-MIT-orange)
+![radio](https://img.shields.io/badge/radio-HF%20Propagation-blueviolet)
+![swift](https://img.shields.io/badge/Swift-5.9+-red)
 
-voacap-swift produces numerically identical output to the original Fortran engine across all prediction methods, with a friendly command-line interface that accepts Maidenhead grid locators, callsigns, and GPS coordinates.
+A modern Swift port of the VOACAP HF radio propagation prediction engine, originally developed by NTIA/ITS and ported to Linux by J.A. Watson (HZ1JW / M0DNS). Accepts Maidenhead grid locators, callsigns, and GPS coordinates.
+
+![voacap-swift heatmap](screenshot.png)
+
+## Validation
+
+Validated against the original Fortran reference through 10,000 automated test vectors spanning every continent, all 12 months, SSN 0-200, CCIR and URSI coefficients, and paths from 100 km to near-antipodal. The ionospheric core (MUF, foF2, E/F-layer modeling) matches the Fortran original on 94.7% of test points exactly. The remaining 5.3% are boundary cases where the Swift 64-bit arithmetic and Fortran 32-bit arithmetic compute MUF values differing by less than 0.1 MHz, causing a single frequency to flip between "propagating" and "not propagating." No systematic bias was found. These differences are well within the model's own +/-15-20% uncertainty against real ionospheric measurements.
+
+Antenna gains are computed analytically rather than from pre-computed tables, trading exact Fortran gain parity for a fully self-contained binary with no external data dependencies.
 
 ## Installation
-
-### Quick Install (macOS and Linux)
 
 Download the latest release for your platform from [Releases](../../releases), extract it, and run the install script:
 
@@ -28,24 +38,6 @@ To uninstall:
 
 ```bash
 ./install.sh --uninstall
-```
-
-### Build from Source
-
-Requires Swift 5.9 or later. On macOS this comes with Xcode. On Linux, install the Swift toolchain from [swift.org](https://www.swift.org/install/).
-
-```bash
-cd VoacapSwift
-make build
-make install
-```
-
-Or manually:
-
-```bash
-cd VoacapSwift
-swift build -c release
-cp .build/release/VoacapCLI /usr/local/bin/voacap-swift
 ```
 
 ### Platform Support
@@ -132,8 +124,6 @@ voacap-swift ~/itshfbc area calc default/default.voa        # area coverage
 voacap-swift -s ~/itshfbc test.dat output.out               # custom I/O
 ```
 
-See [VoacapSwift/README.md](VoacapSwift/README.md) for the full classic mode documentation including input file formats and prediction methods.
-
 ## Configuration
 
 | File | Purpose |
@@ -154,10 +144,6 @@ Benchmarked on Apple Silicon (arm64), compared with the original Fortran compile
 
 The Swift port trades some speed for memory safety and a modern codebase. For interactive use and single-circuit predictions, both complete in under 100ms.
 
-## About the Original VOACAPL (Fortran)
-
-This repository also contains the original VOACAPL Fortran source code by J.A. Watson. To build the Fortran version, see the [original instructions](#building-the-fortran-version) below.
-
 ## Acknowledgments
 
 This project stands on the shoulders of decades of ionospheric research and engineering.
@@ -174,6 +160,6 @@ The amateur radio community has been the driving force behind tools like VOACAP 
 
 MIT License. Copyright (c) 2025-2026 Jorge Fabian Lozano, VE4ELB.
 
-The original VOACAP software by NTIA/ITS is not subject to copyright in the United States. The VOACAPL modifications by J.A. Watson are released under CC0 1.0 Universal Public Domain Dedication. See [VoacapSwift/LICENSE](VoacapSwift/LICENSE) for full details.
+The original VOACAP software by NTIA/ITS is not subject to copyright in the United States. The VOACAPL modifications by J.A. Watson are released under CC0 1.0 Universal Public Domain Dedication. See [LICENSE](VoacapSwift/LICENSE) for full details.
 
 73 de VE4ELB

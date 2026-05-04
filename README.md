@@ -1,6 +1,6 @@
 # voacap-swift
 
-![release](https://img.shields.io/badge/release-v0.1.0-blue)
+![release](https://img.shields.io/github/v/release/jflozanor/voacap-swift?label=release&color=blue)
 ![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Raspberry%20Pi-green)
 ![license](https://img.shields.io/badge/license-MIT-orange)
 ![radio](https://img.shields.io/badge/radio-HF%20Propagation-blueviolet)
@@ -21,8 +21,8 @@ Antenna gains are computed analytically rather than from pre-computed tables, tr
 Download the latest release for your platform from [Releases](../../releases), extract it, and run the install script:
 
 ```bash
-tar xzf voacap-swift-0.1.0-<platform>.tar.gz
-cd voacap-swift-0.1.0-<platform>/
+tar xzf voacap-swift-<version>-<platform>.tar.gz
+cd voacap-swift-<version>-<platform>/
 ./install.sh
 ```
 
